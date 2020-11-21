@@ -1,0 +1,28 @@
+* {
+    font-family: 'Hermit', monospace;
+}
+#wrapper {
+    margin: 0px auto;
+    width: 950px;
+    font-family: sans-serif;
+    padding: 25px;
+    background-color: black;
+}
+#wrapper > h1 {
+    color: teal;
+}
+.form-box{
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    padding: 25px;
+    margin: 10px;
+    background-color: teal;
+}
+.form-box form {
+    margin: 25px;
+}
+.form-box input {
+    display: block;
+    margin: 10px;
+}

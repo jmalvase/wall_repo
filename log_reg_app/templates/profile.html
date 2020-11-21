@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Your are on {{user.first_name}} {{user.last_name}}'s Profile!</h1>
+    <h2>Their messages:</h2>
+    <ul>
+        {% for post in user.messages.all %}
+        <li>{{post.content}}</li>
+        {% endfor %}
+    </ul>
+    <h2>Their Comments:</h2>
+    <ul>
+    {% for comment in user.comments.all %}
+    <li>On {{comment.message.poster.first_name}}'s Post:</li>
+    <li>{{comment.message.content}}</li>
+    <li>{{comment.poster.first_name}} wrote: {{comment.content}}</li>
+    {% endfor %}
+    </ul>
+    <a href="/success">Back</a>
+</body>
+</html>

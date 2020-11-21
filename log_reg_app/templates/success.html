@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Success</title>
+</head>
+<body>
+    <h1>{{request.session.user_name}} has successfully logged in!</h1>
+    <a href="/logout">Log Out</a>
+
+    <form action="/create_message" method="POST">
+        {% csrf_token %}
+        <textarea name="content" cols="80" rows="10"></textarea>
+        <input type="submit" value="Post">
+    </form>
+
+    <div id="messsages">
+        {% for message in all_messages %}
+        <div class="one-message">
+            <p>Posted By <a href="/user/{{message.poster.id}}">{{message.poster.first_name}} {{message.poster.last_name}}</a> on {{message.created_at}}:</p>
+            {% if message.poster.id == request.session.user_id %}
+            <a href="/delete/{{message.id}}">Delete Message</a>
+            {% endif %}
+            <p>{{message.content}}</p><br>
+            <a href="/like/{{message.id}}">Like Post</a>
+            <p>Likes: {{ message.user_likes.count }}</p>
+            <p>Comment:</p>
+                <p>{{comment.poster.first_name}} {{comment.poster.last_name}}</p>
+                {% for comment in message.comments.all%}
+                {% if comment.poster.id == request.session.user_id %}
+                <a href="/comm_delete/{{comment.id}}">Delete Comment</a>
+                {% endif %}
+                <p>{{comment.content}}</p>
+                <p>{{comment.created_at}}</p>
+            {% endfor %}
+            <form action="/create_comment" method="POST">
+            {% csrf_token %}
+            <textarea name="content" cols="50" rows="5"></textarea>
+            <input type="hidden" name="message" value="{{message.id}}">
+            <input type="submit" value="Post">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
